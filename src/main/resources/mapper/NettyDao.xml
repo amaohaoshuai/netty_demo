@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mcd.netty.dao.NettyDao">
+    <!-- Java实体类与数据库表字段绑定 -->
+    <resultMap id="msgMap" type="com.mcd.netty.entity.NettyMsg">
+        <!-- 设备编号 -->
+        <result property="facilityId" column="FACILITY_ID"/>
+        <!-- 设备名称 -->
+        <result property="facilityName" column="FACILITY_NAME"/>
+        <!-- 经度 -->
+        <result property="longitude" column="LONGITUDE"/>
+        <!-- 纬度 -->
+        <result property="latitude" column="LATITUDE"/>
+        <!-- 高程 -->
+        <result property="height" column="HEIGHT"/>
+        <!-- RTK状态 -->
+        <result property="RTKStatus" column="RTK_STATUS"/>
+        <!-- 卫星数量 -->
+        <result property="satelliteCount" column="SATELLITE_COUNT"/>
+        <!-- 入库时间 -->
+        <result property="saveTime" column="SAVE_TIME"/>
+    </resultMap>
+
+    <select id="getMessageByFacilityId" resultMap="msgMap">
+        SELECT * FROM t_netty_msg WHERE FACILITY_ID = #{facilityId}
+    </select>
+
+    <insert id="saveMessage" parameterType="com.mcd.netty.entity.NettyMsg">
+        INSERT INTO t_netty_msg
+        (FACILITY_ID, FACILITY_NAME, LONGITUDE, LATITUDE,
+         HEIGHT, RTK_STATUS, SATELLITE_COUNT, SAVE_TIME)
+        VALUES
+        (#{facilityId},#{facilityName},#{longitude},#{latitude},
+        #{height},#{RTKStatus},#{satelliteCount},#{saveTime})
+    </insert>
+
+    <update id="updateMessage" parameterType="com.mcd.netty.entity.NettyMsg">
+        UPDATE t_netty_msg
+        <set>
+            <if test="facilityName != null">FACILITY_NAME = #{facilityName},</if>
+            <if test="longitude != null">LONGITUDE = #{longitude},</if>
+            <if test="latitude != null">LATITUDE = #{latitude},</if>
+            <if test="height != null">HEIGHT = #{height},</if>
+            <if test="RTKStatus != null">RTK_STATUS = #{RTKStatus},</if>
+            <if test="satelliteCount != null">SATELLITE_COUNT = #{satelliteCount},</if>
+            <if test="saveTime != null">SAVE_TIME = #{saveTime},</if>
+        </set>
+        WHERE FACILITY_ID = #{facilityId}
+    </update>
+
+    <select id="getAllFacility" resultMap="msgMap">
+        SELECT * FROM t_netty_msg
+    </select>
+</mapper>

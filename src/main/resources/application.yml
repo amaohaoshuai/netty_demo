@@ -1,0 +1,27 @@
+server:
+  port: 18080
+  context-path: /netty
+
+  logging.config:
+    classpath:/logback.xml
+
+# 文件上传下载大小、速度配置
+spring:
+  http:
+  multipart:
+  max-file-size: 1000Mb
+  max-request-size: 1000Mb
+# 数据库连接配置
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/mcd_netty?useUnicode=true&characterEncoding=utf8&useSSL=false
+  username: root
+  password: 123
+
+# mybatis配置
+# mybatis全局配置文件
+mybatis_config_file: mybatis-config.xml
+# mybatis映射文件路径
+mapper_path: /mapper/**.xml
+# mybatis实体类包路径配置
+entity_package: com.mcd.netty.entity
